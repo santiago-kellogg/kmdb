@@ -33,6 +33,7 @@ CREATE TABLE castings (
   actor_id INTEGER NOT NULL REFERENCES actors(id),
   character_id INTEGER NOT NULL REFERENCES characters(id),
   cast_order INTEGER NOT NULL CHECK (cast_order > 0),
+  is_spoiler INTEGER NOT NULL DEFAULT 0 CHECK (is_spoiler IN (0, 1)),
   UNIQUE (movie_id, cast_order),
   UNIQUE (movie_id, actor_id, character_id)
 );

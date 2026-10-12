@@ -41,3 +41,6 @@ This conversation took place in VS Code with Codex. No share link is available; 
 unsure where to find one in VS Code.
 
 I've added the chat screenshots in the /chat file under the names chat01 and chat02.
+
+## Phase 2
+I proposed adding a spoiler flag to individual castings and a filtered report, and thought through how future flags could be handled through data changes. After I clarified the approach, the assistant prepared the schema, data, and query edits. Adding the spoiler colum to the database, I then ran the SQl and confirmed that it was doing the right thing.
