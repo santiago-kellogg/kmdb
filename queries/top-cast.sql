@@ -5,7 +5,8 @@
 -- part, once. The order and the column headings don't matter.
 SELECT movies.title AS movie,
        actors.name AS actor,
-       characters.name AS character
+       characters.name AS character,
+       castings.cast_order AS cast_order
 FROM movies
 INNER JOIN castings ON castings.movie_id = movies.id
 INNER JOIN actors ON actors.id = castings.actor_id
