@@ -165,3 +165,39 @@ distrust: it means a slip can't change or delete anything.
 | `/` | **Run SQL**: one statement at a time, for reading data |
 | `/queries` | **Queries**: every file in `queries/`, run fresh on each refresh |
 | `/schema` | **Schema**: every table and column in the database right now, and where each foreign key points |
+
+
+## Assignment 2 Spoiler-free
+
+**Assignment 1: KMDB (phase 2 of 2): Spoiler-Free Mode**
+
+Here's the change request. It arrived after you thought you were done, which is when change requests arrive.
+
+> **As a** guest who hasn't seen one of the movies yet, **I want to** turn on Spoiler-Free Mode, **so I can** read the cast list without it giving away a surprise.
+>
+> Some parts give the story away just by being in the cast list. Our film editor has flagged the first two:
+>
+> - **Batman Begins:** Liam Neeson as Ra's Al Ghul. He's introduced under another name, and who he really is comes out late in the movie.
+> - **The Dark Knight Rises:** Cillian Murphy as Scarecrow. A surprise cameo.
+>
+> Cillian Murphy isn't in KMDB yet, so add him. He plays Scarecrow in all three movies. In Batman Begins, Scarecrow is the movie's other villain and he's on the poster; in The Dark Knight he's in one early scene. Neither of those is a spoiler. Only Rises is.
+>
+> **Acceptance criteria**
+>
+> - Spoiler-Free Mode off is the Top Cast report, `queries/top-cast.sql`. It shows every part, Cillian Murphy's three included.
+> - Spoiler-Free Mode on is a second report, `queries/top-cast-spoiler-free.sql`. It shows the same list without the flagged parts, and nothing else is missing.
+> - When the editor flags another part next month, that is an edit to the data: no new table, no new column, no change to either query.
+
+**Steps**
+
+1. **Size it first.** Before you open a chat: S, M or L, and one sentence on why. As in class, the size comes from the model (what has to change in your tables), not from how big the request sounds. Write it down now; it goes in your pull request.
+
+1.1 Explanation: I think this is an M, because its significant enough that I need to create a filtered view of the castings data which means I have to create a way of flagging what rows of data are considered to be a 'spoiler' and which ones aren't. This means tinkering with the database by adding another column which can be a huge deal if the database is massive. However, in this case given the db isn't big yet its not a huge deal. Also, need to create another query to make sure the filtered view is available.
+
+2. **Branch.** In your Codespace, bottom-left corner, **Create new branch...**, call it `spoiler-free-mode`.
+3. **The chat.** The same chat as phase 1 or a new one, either is fine. Give it the change request and your schema. Screenshots of it go in `chat/` on this branch, as in phase 1.
+4. **Change the files, not the database.** Structure goes in `schema/kmdb.sql`, rows in `data/kmdb.sql`, then `bin/load`. Anything you type into the Run SQL box is gone the next time you run `bin/load`; if a flag only exists there, it doesn't exist. Check both reports on the Queries page.
+5. **Pull request.** Commit, **Publish Branch**, and open a pull request into your `main` on github.com. The description comes pre-filled with four headings; fill in every one. **Leave it open; don't merge it.** A pull request waiting for review is what we grade.
+6. **Submit** the pull request's URL as the "Website URL" for this assignment.
+
+**How it's graded.** From a fresh copy of your branch. Both reports have to run for "It works" to count. The chat link, with screenshots in `chat/` as the backup, is how we see the chat. It's a pull request from a branch, as on a real team: a change committed straight to `main` loses a point.
