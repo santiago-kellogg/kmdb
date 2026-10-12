@@ -3,3 +3,53 @@
 --
 -- bin/load runs this file after schema/kmdb.sql, so every table it inserts into must exist
 -- there. Foreign keys can be typed-in ids (studio_id 1, and so on).
+
+INSERT INTO studios (id, name) VALUES
+  (1, 'Warner Bros.');
+
+INSERT INTO movies (id, title, year, rating, studio_id) VALUES
+  (1, 'Batman Begins', 2005, 'PG-13', 1),
+  (2, 'The Dark Knight', 2008, 'PG-13', 1),
+  (3, 'The Dark Knight Rises', 2012, 'PG-13', 1);
+
+INSERT INTO actors (id, name) VALUES
+  (1, 'Christian Bale'),
+  (2, 'Michael Caine'),
+  (3, 'Liam Neeson'),
+  (4, 'Katie Holmes'),
+  (5, 'Gary Oldman'),
+  (6, 'Heath Ledger'),
+  (7, 'Aaron Eckhart'),
+  (8, 'Maggie Gyllenhaal'),
+  (9, 'Tom Hardy'),
+  (10, 'Joseph Gordon-Levitt'),
+  (11, 'Anne Hathaway');
+
+INSERT INTO characters (id, name) VALUES
+  (1, 'Bruce Wayne'),
+  (2, 'Alfred'),
+  (3, 'Ra''s Al Ghul'),
+  (4, 'Rachel Dawes'),
+  (5, 'Commissioner Gordon'),
+  (6, 'Joker'),
+  (7, 'Harvey Dent'),
+  (8, 'Bane'),
+  (9, 'John Blake'),
+  (10, 'Selina Kyle');
+
+INSERT INTO castings (id, movie_id, actor_id, character_id, cast_order) VALUES
+  (1, 1, 1, 1, 1),
+  (2, 1, 2, 2, 2),
+  (3, 1, 3, 3, 3),
+  (4, 1, 4, 4, 4),
+  (5, 1, 5, 5, 5),
+  (6, 2, 1, 1, 1),
+  (7, 2, 6, 6, 2),
+  (8, 2, 7, 7, 3),
+  (9, 2, 2, 2, 4),
+  (10, 2, 8, 4, 5),
+  (11, 3, 1, 1, 1),
+  (12, 3, 5, 5, 2),
+  (13, 3, 9, 8, 3),
+  (14, 3, 10, 9, 4),
+  (15, 3, 11, 10, 5);
