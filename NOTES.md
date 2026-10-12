@@ -34,13 +34,10 @@ has many movies, and movies, actors, and characters each connect to castings. It
 requires positive cast_order values, prevents duplicate cast positions within a movie,
 and prevents duplicate entries for the same movie, actor, and character.
 
-The schema and README's Batman trilogy data have been committed. At the time of writing,
-bin/load and the Top Cast query still need to be completed and checked.
 
 ## The chat
 
 This conversation took place in VS Code with Codex. No share link is available; I was
 unsure where to find one in VS Code.
 
-Screenshots of the whole conversation still need to be added to chat/ in order, as a
-backup in case the share link stops working.
+I've added the chat screenshots in the /chat file under the names chat01 and chat02.
