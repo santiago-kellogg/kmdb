@@ -1,0 +1,29 @@
+<% content_for :title, "Run SQL" %>
+<% schema_file = Rails.configuration.x.load_files[:schema] %>
+
+<h1 class="text-2xl font-bold mb-1">Run SQL</h1>
+<p class="text-sm text-stone-600 mb-4">
+  Type or paste one SQL statement and run it. Your saved files in <code>queries/</code> are on the
+  <%= link_to "Queries", queries_path, class: "underline" %> page.
+</p>
+
+<%# Changing the database's structure belongs in a file loaded from the terminal, never in an
+    app, so the box refuses it (RunSqlPolicy). This note says so before anyone tries. %>
+<aside class="mb-6 rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-stone-800">
+  <p class="font-semibold">This box is for reading data.</p>
+  <p class="mt-1">
+    Use it for <code>SELECT</code>. An occasional <code>INSERT</code>, <code>UPDATE</code> or
+    <code>DELETE</code> is fine; apps change rows all the time. Changing the structure
+    (<code>CREATE TABLE</code>, <code>ALTER TABLE</code>, <code>DROP TABLE</code>) never happens
+    inside an app, so this box won't run it. Put those statements in <code><%= schema_file %></code>
+    and rebuild the database from the terminal:
+  </p>
+  <pre class="mt-2 rounded bg-stone-900 px-3 py-2 text-stone-100">bin/load</pre>
+  <p class="mt-2 text-stone-600">
+    Many teams give the people who analyze data read-only access to the database. Not out of
+    distrust: it means a slip can't change or delete anything. The same caution belongs here.
+    The box also runs one statement at a time.
+  </p>
+</aside>
+
+<%= render "form", query: nil %>

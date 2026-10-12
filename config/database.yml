@@ -1,0 +1,17 @@
+# The database is one file, db/kmdb.sqlite3, built by bin/load from schema/kmdb.sql and
+# data/kmdb.sql. It is not committed: the two .sql files are the source.
+default: &default
+  adapter: sqlite3
+  max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+  # One file, no side files, so bin/load can swap in a rebuilt one at once.
+  pragmas:
+    journal_mode: delete
+
+development:
+  <<: *default
+  database: db/kmdb.sqlite3
+
+test:
+  <<: *default
+  database: storage/test.sqlite3

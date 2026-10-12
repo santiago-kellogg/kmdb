@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+# Rebuilds the database from scratch: the schema file (CREATE TABLE) first, then the
+# data file (INSERT). It builds a new database beside the old one and swaps it in only
+# if both files load cleanly, so a mistake never leaves you with a half-built database.
+#
+#   bin/load
+
+require_relative "../config/environment"
+require "open3"
+
+root = Rails.root
+relative = ->(path) { path.relative_path_from(root) }
+files = Rails.configuration.x.load_files.values.map { |path| root.join(path) }
+database = root.join(ActiveRecord::Base.connection_db_config.database)
+building = Pathname("#{database}.loading")
+
+building.delete if building.exist?
+
+files.each do |file|
+  abort "bin/load stopped: #{relative.(file)} is missing." unless file.exist?
+
+  # -bail stops at the first error and names the line it was on.
+  output, status = Open3.capture2e("sqlite3", "-bail", building.to_s, stdin_data: file.read)
+  next if status.success?
+
+  building.delete if building.exist?
+  abort <<~MESSAGE
+    bin/load stopped in #{relative.(file)}:
+    #{output.strip}
+
+    Nothing changed: the database is as it was before this run. Fix the file and run bin/load again.
+  MESSAGE
+end
+
+# Files with nothing but comments leave no database behind; start from an empty one.
+FileUtils.touch(building)
+File.rename(building, database)
+
+db = SQLite3::Database.new(database.to_s, readonly: true)
+tables = db.execute("SELECT name FROM sqlite_master WHERE type = 'table' AND name NOT LIKE 'sqlite_%' ORDER BY name")
+  .map { |(name)| [name, db.get_first_value(%(SELECT COUNT(*) FROM "#{name}"))] }
+db.close
+
+puts "Loaded #{files.map { |file| relative.(file) }.join(' and ')}."
+if tables.empty?
+  puts "No tables yet."
+else
+  width = tables.map { |name, _| name.length }.max
+  tables.each { |name, rows| puts "  #{name.ljust(width)}  #{rows} #{rows == 1 ? 'row' : 'rows'}" }
+end
+puts "Open the Schema page to check it against your drawing."

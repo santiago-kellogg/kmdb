@@ -1,0 +1,14 @@
+/.bundle
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+/storage/*
+!/storage/.keep
+/public/assets
+/config/master.key
+.DS_Store
+
+# Built by bin/load from schema/ and data/; the .sql files are the source.
+/db/*.sqlite3
+/db/*.sqlite3.loading

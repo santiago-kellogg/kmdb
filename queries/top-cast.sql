@@ -1,0 +1,5 @@
+-- Q: Top Cast: each movie, and each actor in it with the character they play
+--
+-- One SELECT, under these comments. It needs more than one table. The Queries page runs it
+-- on every refresh; compare what it shows with the top casts in README.md's data: every
+-- part, once. The order and the column headings don't matter.

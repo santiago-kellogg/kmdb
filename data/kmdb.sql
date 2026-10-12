@@ -1,0 +1,5 @@
+-- KMDB's rows, as INSERT statements: everything in README.md's data.
+-- Only rows here. The tables (CREATE TABLE) go in schema/kmdb.sql.
+--
+-- bin/load runs this file after schema/kmdb.sql, so every table it inserts into must exist
+-- there. Foreign keys can be typed-in ids (studio_id 1, and so on).

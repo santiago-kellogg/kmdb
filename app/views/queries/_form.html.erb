@@ -1,0 +1,11 @@
+<turbo-frame id="adhoc">
+  <%= form_with url: queries_path do |form| %>
+    <%= form.text_area :sql, value: query&.sql, rows: 8, placeholder: Rails.configuration.x.example_query,
+          class: "w-full rounded-md border border-stone-300 p-3 text-sm focus:outline-none focus:ring-2 focus:ring-stone-600" %>
+    <%= form.submit "Run", class: "mt-3 cursor-pointer rounded-md bg-stone-900 px-4 py-2 text-sm font-semibold text-white hover:bg-stone-700" %>
+  <% end %>
+
+  <% if query %>
+    <div class="mt-6"><%= render "result", query: query %></div>
+  <% end %>
+</turbo-frame>

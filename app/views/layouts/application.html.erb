@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= [content_for(:title), Rails.configuration.x.app_title].compact.join(" · ") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <%= javascript_importmap_tags %>
+    <style>
+      textarea, pre { font-family: ui-monospace, Menlo, Consolas, monospace !important; }
+    </style>
+  </head>
+
+  <body class="bg-stone-50 text-stone-900">
+    <nav class="bg-stone-900 text-stone-100 px-6 py-3 flex gap-6 text-sm">
+      <%= link_to "Run SQL", root_path, class: "font-semibold hover:underline" %>
+      <%= link_to "Queries", queries_path, class: "hover:underline" %>
+      <%= link_to "Schema", schema_path, class: "hover:underline" %>
+    </nav>
+    <main class="max-w-6xl mx-auto p-6">
+      <%= yield %>
+    </main>
+  </body>
+</html>

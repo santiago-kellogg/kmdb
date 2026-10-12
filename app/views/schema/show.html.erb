@@ -1,0 +1,45 @@
+<% content_for :title, "Schema" %>
+<% schema_file = Rails.configuration.x.load_files[:schema] %>
+
+<h1 class="text-2xl font-bold mb-1">Schema</h1>
+<p class="text-sm text-stone-600 mb-6">
+  Every table in the database right now, read from the database itself on each refresh. This is
+  what <code>bin/load</code> built from <code><%= schema_file %></code>. Check it against your drawing:
+  one table per box, the columns you drew, and each foreign key pointing where you meant it to.
+</p>
+
+<% if @tables.empty? %>
+  <p class="text-stone-600">
+    No tables yet. Put <code>CREATE TABLE</code> statements in <code><%= schema_file %></code>,
+    then run <code>bin/load</code> in the terminal and refresh this page.
+  </p>
+<% else %>
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <% @tables.each do |table| %>
+      <section class="border border-stone-300 rounded-lg bg-white overflow-hidden">
+        <header class="px-4 py-2 bg-stone-800 text-white flex justify-between items-baseline">
+          <h2 class="font-semibold font-mono"><%= table.name %></h2>
+          <span class="text-xs text-stone-300"><%= pluralize(table.row_count, "row") %></span>
+        </header>
+        <ul class="divide-y divide-stone-200 text-sm font-mono">
+          <% table.columns.each do |column| %>
+            <li class="px-4 py-1.5 flex justify-between gap-3">
+              <span class="<%= "font-semibold" if column.primary_key %>"><%= column.name %></span>
+              <span class="text-right text-stone-500">
+                <% if column.primary_key %>
+                  key
+                <% elsif column.points_to_missing %>
+                  <span class="text-red-700">&rarr; <%= column.points_to %>? no such table</span>
+                <% elsif column.points_to %>
+                  &rarr; <%= column.points_to %>
+                <% else %>
+                  <%= column.type.presence&.downcase || "no type" %>
+                <% end %>
+              </span>
+            </li>
+          <% end %>
+        </ul>
+      </section>
+    <% end %>
+  </div>
+<% end %>

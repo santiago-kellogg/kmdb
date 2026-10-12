@@ -1,0 +1,5 @@
+-- KMDB's tables, as CREATE TABLE statements: one for each table in your drawing.
+-- Only tables here. The rows (INSERT) go in data/kmdb.sql.
+--
+-- bin/load runs this file first, on an empty database, then data/kmdb.sql.
+-- No DROP TABLE lines needed: bin/load starts from nothing every time.

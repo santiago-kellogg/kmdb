@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+# Runs one .sql file against the database and prints the result.
+#
+#   bin/query queries/01-name.sql
+
+path = ARGV.first
+abort "usage: bin/query queries/NN-name.sql" unless path && File.file?(path)
+
+require_relative "../config/environment"
+
+query = Query.new(File.read(path)).run
+abort query.error if query.error?
+
+rows = query.rows.map { |row| row.map(&:to_s) }
+widths = query.columns.each_index.map do |i|
+  [query.columns[i].to_s.length, *rows.map { |row| row[i].length }].max
+end
+line = ->(cells) { cells.each_with_index.map { |cell, i| cell.to_s.ljust(widths[i]) }.join(" | ") }
+
+puts line.(query.columns)
+puts widths.map { |w| "-" * w }.join("-+-")
+rows.each { |row| puts line.(row) }
+puts "(#{rows.size} #{rows.size == 1 ? 'row' : 'rows'})"
